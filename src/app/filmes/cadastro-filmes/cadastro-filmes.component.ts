@@ -13,6 +13,10 @@ export class CadastroFilmesComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
   }
 
+  get cadastroControls() {
+    return this.cadastro.controls;
+  }
+
   ngOnInit(): void {
 
     this.cadastro = this.formBuilder.group({
@@ -28,13 +32,14 @@ export class CadastroFilmesComponent implements OnInit {
   }
 
   salvar(): void {
+    this.cadastro.markAllAsTouched();
     if (this.cadastro.invalid) {
       return;
     }
     alert('Sucesso!\n' + JSON.stringify(this.cadastro.value, null, 2));
   }
 
-  reiniciarForm(): void{
+  reiniciarForm(): void {
     this.cadastro.reset();
   }
 
