@@ -21,11 +21,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.5em;
 }
 
 .full-width {
   width: 100%;
 }
 
-html, body { height: 100%; }
+.div-error{
+  font-size: 1.5em;
+}
+
+html, body { height: 100%;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
