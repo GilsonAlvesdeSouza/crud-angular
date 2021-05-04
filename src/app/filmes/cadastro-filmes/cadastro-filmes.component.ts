@@ -25,7 +25,7 @@ export class CadastroFilmesComponent implements OnInit {
       urlFoto: ['', [Validators.minLength(10)]],
       dataLancamento: ['', [Validators.required]],
       descricao: ['', []],
-      notaImdb: [0, [Validators.required, Validators.min(0), Validators.max(10), Validators.pattern((/^-?(0|[1-9]\d*)?$/))]],
+      notaImdb: [0, [Validators.required, Validators.min(0), Validators.max(10), Validators.pattern((/^\d{1,1}|^\d{11}(\.\d+)?$/))]],
       urlImdb: ['', [Validators.minLength(10)]],
       genero: ['', [Validators.required]],
     });
@@ -45,3 +45,4 @@ export class CadastroFilmesComponent implements OnInit {
   }
 
 }
+
