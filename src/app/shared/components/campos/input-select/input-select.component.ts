@@ -14,6 +14,7 @@ export class InputSelectComponent {
   @Input() formGroup: FormGroup;
   @Input() placeholder: string;
   @Input() controlName: string;
+  @Input() opcoes: Array<string>;
 
   get formControl(): AbstractControl {
     return this.formGroup.controls[this.controlName];
