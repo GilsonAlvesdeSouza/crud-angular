@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material';
+import {Router} from '@angular/router';
 import {ValidaCamposService} from '../../shared/components/campos/valida-campos.service';
 import {FilmesService} from '../../core/filmes.service';
 import {Filme} from '../../shared/models/filme';
@@ -21,7 +22,8 @@ export class CadastroFilmesComponent implements OnInit {
     public validacao: ValidaCamposService,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private filmeService: FilmesService
+    private filmeService: FilmesService,
+    private router: Router
   ) {
   }
 
@@ -69,9 +71,24 @@ export class CadastroFilmesComponent implements OnInit {
           } as Alerta
         };
         const dialogRef = this.dialog.open(AlertaComponent, config);
+        dialogRef.afterClosed().subscribe((opcao: boolean) => {
+          if (opcao) {
+            this.router.navigateByUrl('filmes');
+          } else {
+            this.reiniciarForm();
+          }
+        });
       },
       () => {
-        alert('Erro ao salvar!');
+        const config = {
+          data: {
+            titulo: 'Oops ocorreu um erro!',
+            mensagem: 'Por favor tente novamente!',
+            btnSucesso: 'Fechar',
+            corBtnSucesso: 'warn'
+          } as Alerta
+        };
+        this.dialog.open(AlertaComponent, config);
       });
   }
 }
