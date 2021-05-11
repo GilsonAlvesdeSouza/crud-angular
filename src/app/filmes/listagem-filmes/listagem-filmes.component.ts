@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FilmesService} from 'src/app/core/filmes.service';
 import {Filme} from 'src/app/shared/models/filme';
-import {ConfigParams} from "../../shared/models/config-params";
+import {ConfigParams} from '../../shared/models/config-params';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'dio-listagem-filmes',
@@ -15,6 +16,7 @@ export class ListagemFilmesComponent implements OnInit {
     pagina: 0,
     qtdPagina: 4,
   } as ConfigParams;
+  readonly semFoto = '../assets/images/sem-imagem.jpeg';
   filmes: Filme[] = [];
   filtroFilme: FormGroup;
   generos: Array<string>;
@@ -31,7 +33,9 @@ export class ListagemFilmesComponent implements OnInit {
       genero: ['']
     });
 
-    this.filtroFilme.get('texto').valueChanges.subscribe((val: string) => {
+    this.filtroFilme.get('texto').valueChanges
+      .pipe(debounceTime(900))
+      .subscribe((val: string) => {
       this.config.texto = val;
       this.resetarConsulta();
     });
