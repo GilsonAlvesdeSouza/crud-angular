@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 import {FilmesService} from 'src/app/core/filmes.service';
 import {Filme} from 'src/app/shared/models/filme';
 import {ConfigParams} from '../../shared/models/config-params';
@@ -23,7 +24,8 @@ export class ListagemFilmesComponent implements OnInit {
 
   constructor(
     private filmesService: FilmesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
   }
 
@@ -36,9 +38,9 @@ export class ListagemFilmesComponent implements OnInit {
     this.filtroFilme.get('texto').valueChanges
       .pipe(debounceTime(900))
       .subscribe((val: string) => {
-      this.config.texto = val;
-      this.resetarConsulta();
-    });
+        this.config.texto = val;
+        this.resetarConsulta();
+      });
 
     this.filtroFilme.get('genero').valueChanges.subscribe((val: string) => {
       this.config.campo = {campo: 'genero', valor: val};
@@ -51,6 +53,10 @@ export class ListagemFilmesComponent implements OnInit {
 
   onScroll(): void {
     this.listar();
+  }
+
+  abrir(id: number): void {
+    this.router.navigateByUrl('/filmes/' + id);
   }
 
   private listar(): void {
